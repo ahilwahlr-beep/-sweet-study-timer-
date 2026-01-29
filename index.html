@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🍭 Sweet Study: Neko Pou Edition 🍭</title>
+    <title>🍭 Sweet Study: Cat Pou Edition 🍭</title>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -24,7 +24,7 @@
             .sidebar { flex: none; height: auto; border-left: none; border-top: 6px solid var(--text-dark); padding-bottom: 50px; }
         }
 
-        /* --- AREA POU --- */
+        /* --- AREA POU WITH EARS --- */
         .room-area { 
             flex: 1.8; position: relative; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; 
             background-color: #FFF5F7;
@@ -35,15 +35,21 @@
         
         .pou-container { z-index: 10; margin-bottom: 40px; animation: bounce 3s infinite ease-in-out; cursor: pointer; position: relative; }
         
+        /* Kuping Kucing */
+        .ear { position: absolute; width: 50px; height: 60px; background: #FFD1DC; border: 5px solid var(--text-dark); border-radius: 50% 50% 0 0; top: -15px; z-index: -1; }
+        .ear.left { left: 20px; transform: rotate(-20deg); }
+        .ear.right { right: 20px; transform: rotate(20deg); }
+        .ear::after { content: ''; position: absolute; width: 25px; height: 35px; background: #FFB7CE; border-radius: 50% 50% 0 0; top: 10px; left: 8px; }
+
         .pou { 
             width: 240px; height: 210px; background-color: #FFD1DC; 
             border: 5px solid var(--text-dark); 
             border-radius: 50% 50% 48% 48% / 60% 60% 40% 40%; 
             position: relative; 
             box-shadow: inset -10px -10px 0 rgba(255,105,180,0.2);
+            overflow: visible;
         }
 
-        /* Neko Face */
         .eye { position: absolute; width: 32px; height: 32px; background: #333; border-radius: 50%; top: 75px; left: 50px; }
         .eye::after { content: ''; position: absolute; width: 10px; height: 10px; background: white; border-radius: 50%; top: 5px; left: 5px; box-shadow: 8px 12px 0 -2px white; }
         .eye.right { left: auto; right: 50px; }
@@ -51,25 +57,17 @@
         .blush { position: absolute; width: 40px; height: 15px; background: #FF91A4; border-radius: 50%; top: 115px; left: 35px; opacity: 0.6; filter: blur(2px); }
         .blush.right { left: auto; right: 35px; }
 
-        /* Cat Mouth Style (w) */
         .cat-nose { position: absolute; width: 10px; height: 6px; background: #5D4037; border-radius: 50%; top: 108px; left: 50%; transform: translateX(-50%); }
-        .mouth-cat { 
-            position: absolute; width: 24px; height: 12px; 
-            border-bottom: 3px solid var(--text-dark); 
-            border-radius: 0 0 12px 12px;
-            top: 108px; left: 50%;
-        }
-        .m-left { transform: translateX(-100%) rotate(0deg); border-left: 3px solid transparent; border-right: 3px solid var(--text-dark); border-radius: 0 0 10px 10px; width: 12px; }
-        .m-right { transform: translateX(0%) rotate(0deg); border-right: 3px solid transparent; border-left: 3px solid var(--text-dark); border-radius: 0 0 10px 10px; width: 12px; }
+        .mouth-cat { position: absolute; width: 12px; height: 10px; border-bottom: 3px solid var(--text-dark); border-radius: 0 0 10px 10px; top: 108px; left: 50%; }
+        .m-left { transform: translateX(-100%); border-right: 3px solid var(--text-dark); }
+        .m-right { transform: translateX(0%); border-left: 3px solid var(--text-dark); }
 
-        /* Eating Animation */
-        .eating .mouth-cat { display: none; }
-        .eating .cat-nose { display: none; }
         .eat-circle { display: none; position: absolute; width: 20px; height: 20px; background: #FF69B4; border-radius: 50%; top: 105px; left: 50%; transform: translateX(-50%); }
+        .eating .mouth-cat, .eating .cat-nose { display: none; }
         .eating .eat-circle { display: block; }
         .eating { animation: chew 0.3s ease-in-out !important; }
 
-        .accessory-slot { font-size: 75px; position: absolute; top: -50px; left: 50%; transform: translateX(-50%); z-index: 20; pointer-events: none; }
+        .accessory-slot { font-size: 75px; position: absolute; top: -55px; left: 50%; transform: translateX(-50%); z-index: 20; pointer-events: none; }
 
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
         @keyframes chew { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
@@ -85,7 +83,7 @@
         .btn-group { display: flex; gap: 8px; }
         button { background-color: var(--button-pink); color: white; border: 3px solid var(--text-dark); padding: 10px; font-family: 'VT323', monospace; font-size: 20px; cursor: pointer; border-radius: 15px; box-shadow: 4px 4px 0 var(--text-dark); flex: 1; }
         button:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--text-dark); }
-        button:disabled { background-color: #ddd; cursor: not-allowed; box-shadow: none; }
+        button:disabled { background-color: #ddd; cursor: not-allowed; box-shadow: none; opacity: 0.7; }
         
         .day-card { background: var(--white); border: 3px solid var(--gingham-pink); border-radius: 12px; padding: 10px; margin-bottom: 6px; }
         .status-bubble { position: absolute; top: 15%; background: white; padding: 10px 20px; border-radius: 20px; border: 4px solid var(--button-pink); display: none; z-index: 25; font-size: 24px; }
@@ -101,6 +99,8 @@
             <div id="bubble" class="status-bubble">Yum! ✨</div>
             <div id="pou-character" class="pou-container" onclick="feedPou()">
                 <div id="head-accessory" class="accessory-slot">🎀</div>
+                <div class="ear left"></div>
+                <div class="ear right"></div>
                 <div class="pou">
                     <div class="eye left"></div>
                     <div class="eye right"></div>
@@ -131,8 +131,8 @@
             </div>
 
             <div class="btn-group">
-                <button onclick="openModal('shop-modal')" style="background: #FDE047; color: black;">🛍️ SHOP</button>
-                <button onclick="openModal('storage-modal')" style="background: #93C5FD; color: white;">📦 STORAGE</button>
+                <button id="btn-shop" onclick="openModal('shop-modal')" style="background: #FDE047; color: black;">🛍️ SHOP</button>
+                <button id="btn-storage" onclick="openModal('storage-modal')" style="background: #93C5FD; color: white;">📦 STORAGE</button>
             </div>
 
             <hr style="border: 2px dashed var(--gingham-pink);">
@@ -265,8 +265,6 @@
         function startTimer(min, mode) {
             if(isRunning) return; 
             isRunning = true;
-            
-            // CUMA MATIKAN TOMBOL TIMER & INPUT, SHOP TETAP BISA DIBUKA
             document.getElementById('btn-study').disabled = true;
             document.getElementById('btn-rest').disabled = true;
             document.getElementById('custom-min').disabled = true;
@@ -280,12 +278,9 @@
                 if(time <= 0) {
                     clearInterval(timerObj);
                     isRunning = false;
-                    
-                    // NYALAKAN LAGI TOMBOLNYA
                     document.getElementById('btn-study').disabled = false;
                     document.getElementById('btn-rest').disabled = false;
                     document.getElementById('custom-min').disabled = false;
-
                     if(mode === 'study') {
                         let earned = Math.floor(min / 5);
                         candies += earned;

@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🍭 Sweet Study: Mega Update 🍭</title>
+    <title>🍭 Sweet Study: Neko Pou Edition 🍭</title>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gingham-pink: #FF85A1;
-            --sidebar-purple: #D8B4FE;
-            --button-pink: #FF4D8D;
-            --text-dark: #4A1D33;
+            --gingham-pink: #FFB7CE;
+            --sidebar-purple: #F3E8FF;
+            --button-pink: #FF85A1;
+            --text-dark: #5D4037;
             --white: #ffffff;
         }
 
@@ -20,62 +20,96 @@
         @media (max-width: 768px) {
             #main-wrapper { flex-direction: column; overflow-y: auto; }
             body { overflow-y: auto; }
-            .room-area { min-height: 400px; flex: none; }
+            .room-area { min-height: 450px; flex: none; }
             .sidebar { flex: none; height: auto; border-left: none; border-top: 6px solid var(--text-dark); padding-bottom: 50px; }
         }
 
         /* --- AREA POU --- */
         .room-area { 
             flex: 1.8; position: relative; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; 
-            background-image: linear-gradient(90deg, rgba(255, 133, 161, 0.4) 50%, transparent 50%), linear-gradient(rgba(255, 133, 161, 0.4) 50%, transparent 50%); 
-            background-size: 50px 50px; 
+            background-color: #FFF5F7;
+            background-image: radial-gradient(#FFD1DC 2px, transparent 2px);
+            background-size: 30px 30px;
         }
-        .floor { width: 100%; height: 15%; background-color: #FDF2F8; border-top: 6px solid var(--button-pink); position: absolute; bottom: 0; z-index: 1; }
+        .floor { width: 100%; height: 15%; background-color: #FFE4E1; border-top: 6px solid var(--gingham-pink); position: absolute; bottom: 0; z-index: 1; }
         
-        .pou-container { z-index: 10; margin-bottom: 30px; animation: bounce 3s infinite ease-in-out; cursor: pointer; position: relative; }
+        .pou-container { z-index: 10; margin-bottom: 40px; animation: bounce 3s infinite ease-in-out; cursor: pointer; position: relative; }
+        
+        .pou { 
+            width: 240px; height: 210px; background-color: #FFD1DC; 
+            border: 5px solid var(--text-dark); 
+            border-radius: 50% 50% 48% 48% / 60% 60% 40% 40%; 
+            position: relative; 
+            box-shadow: inset -10px -10px 0 rgba(255,105,180,0.2);
+        }
+
+        /* Neko Face */
+        .eye { position: absolute; width: 32px; height: 32px; background: #333; border-radius: 50%; top: 75px; left: 50px; }
+        .eye::after { content: ''; position: absolute; width: 10px; height: 10px; background: white; border-radius: 50%; top: 5px; left: 5px; box-shadow: 8px 12px 0 -2px white; }
+        .eye.right { left: auto; right: 50px; }
+
+        .blush { position: absolute; width: 40px; height: 15px; background: #FF91A4; border-radius: 50%; top: 115px; left: 35px; opacity: 0.6; filter: blur(2px); }
+        .blush.right { left: auto; right: 35px; }
+
+        /* Cat Mouth Style (w) */
+        .cat-nose { position: absolute; width: 10px; height: 6px; background: #5D4037; border-radius: 50%; top: 108px; left: 50%; transform: translateX(-50%); }
+        .mouth-cat { 
+            position: absolute; width: 24px; height: 12px; 
+            border-bottom: 3px solid var(--text-dark); 
+            border-radius: 0 0 12px 12px;
+            top: 108px; left: 50%;
+        }
+        .m-left { transform: translateX(-100%) rotate(0deg); border-left: 3px solid transparent; border-right: 3px solid var(--text-dark); border-radius: 0 0 10px 10px; width: 12px; }
+        .m-right { transform: translateX(0%) rotate(0deg); border-right: 3px solid transparent; border-left: 3px solid var(--text-dark); border-radius: 0 0 10px 10px; width: 12px; }
+
+        /* Eating Animation */
+        .eating .mouth-cat { display: none; }
+        .eating .cat-nose { display: none; }
+        .eat-circle { display: none; position: absolute; width: 20px; height: 20px; background: #FF69B4; border-radius: 50%; top: 105px; left: 50%; transform: translateX(-50%); }
+        .eating .eat-circle { display: block; }
         .eating { animation: chew 0.3s ease-in-out !important; }
 
-        .pou { width: 250px; height: 220px; background-color: #FFC0CB; border: 6px solid var(--text-dark); border-radius: 50% 50% 45% 45% / 65% 65% 40% 40%; position: relative; box-shadow: 10px 10px 0 rgba(0,0,0,0.1); }
-        .pou::before { content: ''; position: absolute; width: 35px; height: 35px; background: #222; border-radius: 50%; top: 60px; left: 55px; box-shadow: 100px 0 #222; }
-        .pou-blush { position: absolute; width: 45px; height: 18px; background: #FF1493; border-radius: 50%; top: 110px; left: 40px; box-shadow: 125px 0 #FF1493; opacity: 0.5; pointer-events: none; }
-        .mouth { position: absolute; width: 40px; height: 10px; border-bottom: 4px solid var(--text-dark); border-radius: 0 0 20px 20px; top: 115px; left: 50%; transform: translateX(-50%); }
-        .eating .mouth { background: #4A1D33; width: 45px; height: 35px; border-radius: 50%; border: none; }
+        .accessory-slot { font-size: 75px; position: absolute; top: -50px; left: 50%; transform: translateX(-50%); z-index: 20; pointer-events: none; }
 
-        .accessory-slot { font-size: 70px; position: absolute; top: -45px; left: 50%; transform: translateX(-50%); z-index: 20; filter: drop-shadow(3px 3px 0px white); pointer-events: none; }
-
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-        @keyframes chew { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes chew { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
         /* --- SIDEBAR --- */
-        .sidebar { flex: 1; background-color: var(--sidebar-purple); border-left: 6px solid var(--text-dark); padding: 15px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; }
-        .candy-box { background-color: #FFFF00; border: 4px solid var(--text-dark); padding: 10px; border-radius: 15px; text-align: center; font-size: 26px; font-weight: bold; box-shadow: 4px 4px 0 var(--text-dark); }
-        .timer-display { font-size: 60px; text-align: center; color: var(--white); text-shadow: 4px 4px 0 var(--text-dark); margin: 5px 0; }
+        .sidebar { flex: 1; background-color: var(--sidebar-purple); border-left: 5px solid var(--text-dark); padding: 15px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; }
+        .candy-box { background-color: #FEF08A; border: 4px solid var(--text-dark); padding: 10px; border-radius: 20px; text-align: center; font-size: 26px; font-weight: bold; box-shadow: 4px 4px 0 var(--text-dark); }
+        .timer-display { font-size: 65px; text-align: center; color: var(--button-pink); text-shadow: 3px 3px 0 var(--white); margin: 5px 0; }
         
-        .timer-input-area { display: flex; align-items: center; justify-content: center; gap: 10px; background: rgba(255,255,255,0.3); padding: 10px; border-radius: 10px; }
-        .timer-input-area input { width: 50px; font-family: 'VT323'; font-size: 20px; text-align: center; border: 2px solid var(--text-dark); border-radius: 5px; }
+        .timer-input-area { display: flex; align-items: center; justify-content: center; gap: 10px; background: white; padding: 10px; border-radius: 15px; border: 2px solid var(--gingham-pink); }
+        .timer-input-area input { width: 50px; font-family: 'VT323'; font-size: 20px; text-align: center; border: 2px solid var(--text-dark); border-radius: 8px; }
 
         .btn-group { display: flex; gap: 8px; }
-        button { background-color: var(--button-pink); color: white; border: 3px solid var(--text-dark); padding: 10px; font-family: 'VT323', monospace; font-size: 20px; cursor: pointer; border-radius: 12px; box-shadow: 3px 3px 0 var(--text-dark); flex: 1; }
+        button { background-color: var(--button-pink); color: white; border: 3px solid var(--text-dark); padding: 10px; font-family: 'VT323', monospace; font-size: 20px; cursor: pointer; border-radius: 15px; box-shadow: 4px 4px 0 var(--text-dark); flex: 1; }
         button:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--text-dark); }
-        button:disabled { background-color: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
+        button:disabled { background-color: #ddd; cursor: not-allowed; box-shadow: none; }
         
-        .day-card { background: var(--white); border: 3px solid var(--text-dark); border-radius: 10px; padding: 8px; margin-bottom: 6px; }
-        .status-bubble { position: absolute; top: 15%; background: white; padding: 10px; border-radius: 15px; border: 4px solid var(--button-pink); display: none; z-index: 25; font-size: 22px; }
+        .day-card { background: var(--white); border: 3px solid var(--gingham-pink); border-radius: 12px; padding: 10px; margin-bottom: 6px; }
+        .status-bubble { position: absolute; top: 15%; background: white; padding: 10px 20px; border-radius: 20px; border: 4px solid var(--button-pink); display: none; z-index: 25; font-size: 24px; }
 
-        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
-        .modal-content { background: var(--white); padding: 20px; border: 6px solid var(--button-pink); border-radius: 25px; width: 85%; max-width: 350px; text-align: center; max-height: 80vh; overflow-y: auto; }
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); justify-content: center; align-items: center; }
+        .modal-content { background: var(--white); padding: 25px; border: 6px solid var(--button-pink); border-radius: 30px; width: 85%; max-width: 350px; text-align: center; max-height: 80vh; overflow-y: auto; }
     </style>
 </head>
 <body>
 
     <div id="main-wrapper">
         <div class="room-area">
-            <div id="bubble" class="status-bubble">Nyam! 🍩</div>
+            <div id="bubble" class="status-bubble">Yum! ✨</div>
             <div id="pou-character" class="pou-container" onclick="feedPou()">
                 <div id="head-accessory" class="accessory-slot">🎀</div>
                 <div class="pou">
-                    <div class="pou-blush"></div>
-                    <div class="mouth"></div>
+                    <div class="eye left"></div>
+                    <div class="eye right"></div>
+                    <div class="blush"></div>
+                    <div class="blush right"></div>
+                    <div class="cat-nose"></div>
+                    <div class="mouth-cat m-left"></div>
+                    <div class="mouth-cat m-right"></div>
+                    <div class="eat-circle"></div>
                 </div>
             </div>
             <div class="floor"></div>
@@ -88,44 +122,43 @@
             <div class="timer-input-area">
                 <span>Set:</span>
                 <input type="number" id="custom-min" value="5" min="1" max="120">
-                <span>Menit</span>
+                <span>Min</span>
             </div>
 
             <div class="btn-group">
                 <button id="btn-study" onclick="handleStart('study')">📖 STUDY</button>
-                <button id="btn-rest" style="background:#A855F7" onclick="handleStart('break')">☕ REST</button>
+                <button id="btn-rest" style="background:#C084FC" onclick="handleStart('break')">☕ REST</button>
             </div>
 
             <div class="btn-group">
-                <button onclick="openModal('shop-modal')" style="background: #FACC15; color: black;">🛍️ SHOP</button>
-                <button onclick="openModal('storage-modal')" style="background: #60A5FA; color: white;">📦 STORAGE</button>
+                <button onclick="openModal('shop-modal')" style="background: #FDE047; color: black;">🛍️ SHOP</button>
+                <button onclick="openModal('storage-modal')" style="background: #93C5FD; color: white;">📦 STORAGE</button>
             </div>
 
-            <hr style="border: 2px dashed var(--text-dark);">
+            <hr style="border: 2px dashed var(--gingham-pink);">
             
             <div style="display: flex; gap: 5px;">
-                <select id="day-select" style="font-family: inherit; font-size: 18px; border: 2px solid var(--text-dark);">
-                    <option value="senin">Sen</option><option value="selasa">Sel</option><option value="rabu">Rab</option><option value="kamis">Kam</option><option value="jumat">Jum</option><option value="sabtu">Sab</option><option value="minggu">Min</option>
+                <select id="day-select" style="font-family: inherit; font-size: 18px; border: 2px solid var(--text-dark); border-radius: 5px;">
+                    <option value="senin">Mon</option><option value="selasa">Tue</option><option value="rabu">Wed</option><option value="kamis">Thu</option><option value="jumat">Fri</option><option value="sabtu">Sat</option><option value="minggu">Sun</option>
                 </select>
-                <input type="text" id="task-input" placeholder="Tugas..." style="flex:1; font-family: inherit; padding: 5px; border: 2px solid var(--text-dark);">
+                <input type="text" id="task-input" placeholder="Add task..." style="flex:1; font-family: inherit; padding: 5px; border: 2px solid var(--text-dark); border-radius: 5px;">
                 <button onclick="addTask()" style="flex:none; padding: 5px 15px;">+</button>
             </div>
 
             <div id="planner-list">
-                <div class="day-card"><b>SENIN</b><div id="list-senin"></div></div>
-                <div class="day-card"><b>SELASA</b><div id="list-selasa"></div></div>
-                <div class="day-card"><b>RABU</b><div id="list-rabu"></div></div>
-                <div class="day-card"><b>KAMIS</b><div id="list-kamis"></div></div>
-                <div class="day-card"><b>JUMAT</b><div id="list-jumat"></div></div>
-                <div class="day-card"><b>SABTU</b><div id="list-sabtu"></div></div>
-                <div class="day-card"><b>MINGGU</b><div id="list-minggu"></div></div>
+                <div class="day-card"><b>🌸 MONDAY</b><div id="list-senin"></div></div>
+                <div class="day-card"><b>🌸 TUESDAY</b><div id="list-selasa"></div></div>
+                <div class="day-card"><b>🌸 WEDNESDAY</b><div id="list-rabu"></div></div>
+                <div class="day-card"><b>🌸 THURSDAY</b><div id="list-kamis"></div></div>
+                <div class="day-card"><b>🌸 FRIDAY</b><div id="list-jumat"></div></div>
+                <div class="day-card"><b>🌸 SATURDAY</b><div id="list-sabtu"></div></div>
+                <div class="day-card"><b>🌸 SUNDAY</b><div id="list-minggu"></div></div>
             </div>
         </div>
     </div>
 
-    <div id="shop-modal" class="modal"><div class="modal-content"><h2 style="color: var(--button-pink);">🛍️ SWEET SHOP</h2><div id="shop-items" style="text-align: left;"></div><button onclick="closeModal('shop-modal')" style="width: 100%; margin-top: 10px;">TUTUP</button></div></div>
-    
-    <div id="storage-modal" class="modal"><div class="modal-content"><h2 style="color: #3B82F6;">📦 STORAGE</h2><div id="storage-items" style="text-align: left;"></div><button onclick="closeModal('storage-modal')" style="width: 100%; margin-top: 10px;">TUTUP</button></div></div>
+    <div id="shop-modal" class="modal"><div class="modal-content"><h2>🛍️ SWEET SHOP</h2><div id="shop-items"></div><button onclick="closeModal('shop-modal')" style="width: 100%; margin-top: 15px;">CLOSE</button></div></div>
+    <div id="storage-modal" class="modal"><div class="modal-content"><h2>📦 STORAGE</h2><div id="storage-items"></div><button onclick="closeModal('storage-modal')" style="width: 100%; margin-top: 15px;">CLOSE</button></div></div>
 
     <script>
         let candies = parseInt(localStorage.getItem('candies')) || 0;
@@ -133,23 +166,22 @@
         let foodStock = JSON.parse(localStorage.getItem('food')) || [];
         let currentAcc = localStorage.getItem('currentAcc') || '🎀';
         let isRunning = false;
-        let timerObj = null;
 
         const shopItems = [
-            {type:'acc', item:'👑', name:'Mahkota', price:20},
-            {type:'acc', item:'🕶️', name:'Kacamata', price:15},
-            {type:'acc', item:'🐰', name:'Kelinci', price:25},
-            {type:'acc', item:'👒', name:'Topi Pantai', price:15},
-            {type:'acc', item:'😈', name:'Tanduk', price:30},
-            {type:'acc', item:'😇', name:'Malaikat', price:30},
-            {type:'acc', item:'🎀', name:'Pita Biru', price:10},
-            {type:'food', item:'🍩', name:'Donat', price:5},
+            {type:'acc', item:'👑', name:'Crown', price:20},
+            {type:'acc', item:'🕶️', name:'Glasses', price:15},
+            {type:'acc', item:'🐰', name:'Bunny', price:25},
+            {type:'acc', item:'👒', name:'Hat', price:15},
+            {type:'acc', item:'😈', name:'Devil', price:30},
+            {type:'acc', item:'😇', name:'Angel', price:30},
+            {type:'acc', item:'🎀', name:'Blue Bow', price:10},
+            {type:'food', item:'🍩', name:'Donut', price:5},
             {type:'food', item:'🍕', name:'Pizza', price:12},
             {type:'food', item:'🍣', name:'Sushi', price:15},
-            {type:'food', item:'🍰', name:'Kue Keju', price:10},
-            {type:'food', item:'🍦', name:'Es Krim', price:8},
-            {type:'food', item:'🧋', name:'Boba Tea', price:7},
-            {type:'food', item:'🍭', name:'Permen Besar', price:3}
+            {type:'food', item:'🍰', name:'Cake', price:10},
+            {type:'food', item:'🍦', name:'Ice Cream', price:8},
+            {type:'food', item:'🧋', name:'Boba', price:7},
+            {type:'food', item:'🍭', name:'Big Candy', price:3}
         ];
 
         function saveAll() {
@@ -180,43 +212,36 @@
 
         function buyItem(idx) {
             let s = shopItems[idx];
-            if(s.type === 'acc' && ownedAcc.includes(s.item)) { alert("Sudah punya!"); return; }
+            if(s.type === 'acc' && ownedAcc.includes(s.item)) { alert("Already owned!"); return; }
             if(candies >= s.price) {
                 candies -= s.price;
                 if(s.type === 'acc') ownedAcc.push(s.item);
                 else foodStock.push(s.item);
                 updateUI();
-            } else { alert("Candies kurang! 🍭"); }
+            } else { alert("Not enough candies! 🍭"); }
         }
 
         function updateModals() {
             document.getElementById('shop-items').innerHTML = shopItems.map((s, i) => `
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid #eee; padding-bottom:5px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #ffebee; padding-bottom:5px;">
                     <span>${s.item} ${s.name} (${s.price}🍭)</span>
-                    <button onclick="buyItem(${i})" style="flex:none; padding:2px 10px; font-size:16px;">Beli</button>
+                    <button onclick="buyItem(${i})" style="flex:none; padding:4px 12px; font-size:16px;">Buy</button>
                 </div>
             `).join('');
 
             let st = document.getElementById('storage-items');
-            st.innerHTML = "<b>AKSESORIS:</b><br>";
-            
-            // Tombol Lepas Aksesoris
-            st.innerHTML += `
-                <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
-                    <span>❌ Lepas Semua</span>
-                    <button onclick="useAcc('')" style="flex:none; padding:2px 10px; font-size:16px;">Pilih</button>
-                </div>`;
-
+            st.innerHTML = "<b>🎀 ACCESSORIES:</b><br>";
+            st.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span>❌ Remove</span><button onclick="useAcc('')">Select</button></div>`;
             st.innerHTML += ownedAcc.map(acc => `
                 <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
                     <span>${acc}</span>
-                    <button onclick="useAcc('${acc}')" style="flex:none; padding:2px 10px; font-size:16px;">${currentAcc === acc ? 'Dipakai' : 'Pakai'}</button>
+                    <button onclick="useAcc('${acc}')">${currentAcc === acc ? '✅' : 'Use'}</button>
                 </div>
             `).join('');
             
             let counts = {}; foodStock.forEach(f => counts[f] = (counts[f]||0)+1);
-            st.innerHTML += "<br><b>MAKANAN:</b><br>" + Object.keys(counts).map(f => `<div>${f} x${counts[f]}</div>`).join('');
-            if(foodStock.length === 0) st.innerHTML += "Kosong";
+            st.innerHTML += "<br><b>🍕 FOOD:</b><br>" + Object.keys(counts).map(f => `<div>${f} x${counts[f]}</div>`).join('');
+            if(foodStock.length === 0) st.innerHTML += "Empty";
         }
 
         function useAcc(acc) { currentAcc = acc; updateUI(); }
@@ -225,27 +250,29 @@
             if(foodStock.length > 0) {
                 let f = foodStock.shift();
                 document.getElementById('pou-character').classList.add('eating');
-                showBubble("NYAM! " + f);
-                setTimeout(() => document.getElementById('pou-character').classList.remove('eating'), 500);
+                showBubble("NOM NOM! " + f);
+                setTimeout(() => document.getElementById('pou-character').classList.remove('eating'), 400);
                 updateUI();
-            } else { showBubble("Lapar... 🍭"); }
+            } else { showBubble("Hungry... 🍭"); }
         }
 
         function handleStart(mode) {
             let mins = parseInt(document.getElementById('custom-min').value);
-            if(isNaN(mins) || mins <= 0) { alert("Masukkan menit yang valid!"); return; }
+            if(isNaN(mins) || mins <= 0) return;
             startTimer(mins, mode);
         }
 
         function startTimer(min, mode) {
             if(isRunning) return; 
             isRunning = true;
+            
+            // CUMA MATIKAN TOMBOL TIMER & INPUT, SHOP TETAP BISA DIBUKA
             document.getElementById('btn-study').disabled = true;
             document.getElementById('btn-rest').disabled = true;
             document.getElementById('custom-min').disabled = true;
 
             let time = min * 60;
-            timerObj = setInterval(() => {
+            let timerObj = setInterval(() => {
                 time--;
                 let m = Math.floor(time / 60); let s = time % 60;
                 document.getElementById('timer-display').innerText = `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
@@ -253,15 +280,17 @@
                 if(time <= 0) {
                     clearInterval(timerObj);
                     isRunning = false;
+                    
+                    // NYALAKAN LAGI TOMBOLNYA
                     document.getElementById('btn-study').disabled = false;
                     document.getElementById('btn-rest').disabled = false;
                     document.getElementById('custom-min').disabled = false;
-                    document.getElementById('timer-display').innerText = "00:00";
+
                     if(mode === 'study') {
                         let earned = Math.floor(min / 5);
                         candies += earned;
                         updateUI();
-                        alert(`Fokus Selesai! Dapat ${earned} 🍭`);
+                        alert(`Great! Earned ${earned} 🍭`);
                     }
                 }
             }, 1000);
